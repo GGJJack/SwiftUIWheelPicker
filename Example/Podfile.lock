@@ -1,0 +1,16 @@
+PODS:
+  - SwiftUIWheelPicker (0.1.0)
+
+DEPENDENCIES:
+  - SwiftUIWheelPicker (from `../`)
+
+EXTERNAL SOURCES:
+  SwiftUIWheelPicker:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SwiftUIWheelPicker: d2952668112d6742dd3f2cdb3dcfdead38595960
+
+PODFILE CHECKSUM: 58f3b9ed107b94c714c46a019acf317551cb101a
+
+COCOAPODS: 1.11.0.beta.2
