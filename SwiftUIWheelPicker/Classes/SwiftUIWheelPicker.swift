@@ -23,6 +23,7 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
     private var centerView: AnyView? = nil
     private var centerViewWidth: WidthOption? = nil
     //private var isInfinite: Bool = false
+    private var onValueChanged: ((Item) -> Void)? = nil
 
     public init(_ position: Binding<Int>, items: Binding<[Item]>, @ViewBuilder content: @escaping (Item) -> Content) {
         self.items = items
@@ -46,16 +47,6 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
                 .offset(x: self.translation + (geometry.size.width / 2) + (self.calcContentWidth(geometry, option: contentWidthOption) / 2))
                 .animation(.interactiveSpring(), value: self.position + 1)
                 .animation(.interactiveSpring(), value: translation)
-                .gesture(
-                    DragGesture().updating(self.$translation) { value, state, _ in
-                        state = value.translation.width
-                    }
-                    .onEnded { value in
-                        let offset = value.translation.width / self.calcContentWidth(geometry, option: contentWidthOption)
-                        let newIndex = (CGFloat(self.position) - offset).rounded()
-                        self.position = min(max(Int(newIndex), 0), self.items.wrappedValue.count - 1)
-                    }
-                )
                 .clipped()
                 if let view = edgeLeftView, let width = edgeLeftWidth {
                     view.frame(width: calcContentWidth(geometry, option: width), height: geometry.size.height, alignment: .center)
@@ -73,6 +64,18 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
                         .frame(width: width, height: geometry.size.height, alignment: .center)
                 }
             }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .gesture(
+                DragGesture().updating(self.$translation) { value, state, _ in
+                    state = value.translation.width
+                }
+                .onEnded { value in
+                    let offset = value.translation.width / self.calcContentWidth(geometry, option: contentWidthOption)
+                    let newIndex = (CGFloat(self.position) - offset).rounded()
+                    self.position = min(max(Int(newIndex), 0), self.items.wrappedValue.count - 1)
+                    self.onValueChanged?(items.wrappedValue[self.position])
+                }
+            )
         }
     }
     
@@ -120,6 +123,12 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
     //    newSelf.isInfinite = value
     //    return newSelf
     //}
+    
+    public func onValueChanged(_ callback: @escaping (Item) -> Void) -> Self {
+        var newSelf = self
+        newSelf.onValueChanged = callback
+        return newSelf
+    }
     
     private func drawContentView(_ position: Int, geometry: GeometryProxy) -> some View {
         var sizeResult: CGFloat = 1
