@@ -24,9 +24,15 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
     private var centerViewWidth: WidthOption? = nil
     //private var isInfinite: Bool = false
     private var onValueChanged: ((Item) -> Void)? = nil
-
+    
     public init(_ position: Binding<Int>, items: Binding<[Item]>, @ViewBuilder content: @escaping (Item) -> Content) {
         self.items = items
+        self._position = position
+        self.contentBuilder = content
+    }
+    
+    public init(_ position: Binding<Int>, items: [Item], @ViewBuilder content: @escaping (Item) -> Content) {
+        self.items = Binding.constant(items)
         self._position = position
         self.contentBuilder = content
     }
