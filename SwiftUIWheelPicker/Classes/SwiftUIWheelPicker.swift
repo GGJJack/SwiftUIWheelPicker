@@ -71,6 +71,7 @@ public struct SwiftUIWheelPicker<Content: View, Item>: View {
                 }
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
+            .contentShape(Rectangle())
             .gesture(
                 DragGesture().updating(self.$translation) { value, state, _ in
                     state = value.translation.width
