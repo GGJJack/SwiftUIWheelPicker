@@ -12,6 +12,11 @@ iOS 13.0+
 
 ## Installation
 
+### [Swift Package Manager](https://swift.org/package-manager/)
+
+```swift
+.package(name: "SwiftUIWheelPicker", url: "https://github.com/GGJJack/SwiftUIWheelPicker", from: "0.1.12")
+```
 
 ### [CocoaPods](https://cocoapods.org)
 
