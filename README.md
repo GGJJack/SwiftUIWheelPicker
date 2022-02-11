@@ -64,6 +64,8 @@ SwiftUIWheelPicker($indexRatio, items: $items) { value in
     }
 }
 .width(.Ratio(0.1))
+.clipShape(RoundedRectangle(cornerRadius: 20))
+.overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 2.0))
 ```
 
 ```swift
@@ -165,6 +167,7 @@ SwiftUIWheelPicker($indexValue, items: $items) { value in
             .background(value % 2 == 0 ? Color.blue.opacity(0.4) : Color.green.opacity(0.4))
     }
 }
+.border(Color.black, width: 1)
 ```
 
 ### Scroll To
@@ -192,6 +195,8 @@ SwiftUIWheelPicker($indexScrollTo, items: $items) { value in
             .background(value % 2 == 0 ? Color.blue.opacity(0.4) : Color.green.opacity(0.4))
     }
 }
+.clipShape(RoundedRectangle(cornerRadius: 20))
+.overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 2.0))
 ```
 
 ## Author
